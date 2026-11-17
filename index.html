@@ -4,13 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#101820" />
-  <title>Meridian Care | Appointments</title>
+  <title>Meridian Care Center | Online Hospital Appointment Booking</title>
+  <meta name="description" content="Request a hospital appointment with Meridian Care Center. Choose a care service, submit your preferred date and time, and let the care team review your request." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="Meridian Care Center" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Meridian Care Center" />
+  <meta property="og:title" content="Meridian Care Center | Online Hospital Appointment Booking" />
+  <meta property="og:description" content="Request an appointment with Meridian Care Center. Choose a care service and preferred time, then submit your request for review." />
+  <meta property="og:locale" content="en" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Meridian Care Center | Online Hospital Appointment Booking" />
+  <meta name="twitter:description" content="Request an appointment with Meridian Care Center in a few simple steps." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalOrganization",
+    "name": "Meridian Care Center",
+    "description": "Meridian Care Center provides an online form for patients to request appointments and have those requests reviewed by the care team.",
+    "medicalSpecialty": [],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "appointments"
+    }
+  }
+  </script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <a class="skip-link" href="#patientView">Skip to main content</a>
   <div id="app">
     <header class="topbar">
       <a class="brand" href="#" data-view="patient">
@@ -28,7 +54,7 @@
       <a class="topbar-cta" href="#booking" id="headerBook">Book an appointment <span>↗</span></a>
     </header>
 
-    <main id="patientView">
+    <main id="patientView" itemprop="mainContentOfPage">
       <section class="hero">
         <div class="hero-glow"></div>
         <div class="hero-copy">
