@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101820" />
+  <title>Meridian Care | Appointments</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <a class="brand" href="#" data-view="patient">
+        <span class="brand-mark"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M17 7h6v10h10v6H23v10h-6V23H7v-6h10z" fill="currentColor"/></svg></span>
+        <span><strong>MERIDIAN</strong><small>CARE CENTER</small></span>
+      </a>
+      <nav class="topnav" aria-label="Main navigation">
+        <button class="nav-link active" type="button" data-view="patient" aria-pressed="true">
+          <span class="nav-icon" aria-hidden="true">✚</span><span>Patient booking</span>
+        </button>
+        <button class="nav-link" type="button" data-view="staff" aria-pressed="false">
+          <span class="nav-icon" aria-hidden="true">▣</span><span>Staff portal</span>
+        </button>
+      </nav>
+      <a class="topbar-cta" href="#booking" id="headerBook">Book an appointment <span>↗</span></a>
+    </header>
+
+    <main id="patientView">
+      <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="pulse"></span> CARE THAT FITS YOUR LIFE</div>
+          <h1>Your health deserves<br><em>time and attention.</em></h1>
+          <p>Request an appointment with our care team in a few simple steps. Choose a service and a time that works for you.</p>
+          <a class="primary-btn" href="#booking">Book an appointment <span>→</span></a>
+          <div class="hero-proof"><span class="avatar-stack"><i>MC</i><i>DR</i><i>+</i></span><span><b>Thoughtful care,</b><br>made easier to access.</span></div>
+        </div>
+        <div class="hero-visual">
+          <div class="visual-orbit orbit-one"></div><div class="visual-orbit orbit-two"></div>
+          <div class="calendar-mockup">
+            <div class="calendar-top"><div><span class="calendar-kicker">BOOK YOUR VISIT</span><b>Choose a date</b></div><span class="calendar-month">NOVEMBER 2026 <i>⌄</i></span></div>
+            <div class="calendar-weekdays"><span>SU</span><span>MO</span><span>TU</span><span>WE</span><span>TH</span><span>FR</span><span>SA</span></div>
+            <div class="calendar-days">
+              <span class="muted-day">26</span><span class="muted-day">27</span><span class="muted-day">28</span><span class="muted-day">29</span><span class="muted-day">30</span><span class="muted-day">31</span><span>1</span>
+              <span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
+              <span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
+              <span>16</span><span>17</span><span class="selected-day">18</span><span>19</span><span>20</span><span>21</span><span>22</span>
+              <span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span>
+            </div>
+            <div class="calendar-divider"></div>
+            <div class="time-heading"><b>Available time</b><small>WED, NOV 18</small></div>
+            <div class="time-slots"><span>09:00 AM</span><span class="selected-time">10:30 AM <i>✓</i></span><span>11:00 AM</span></div>
+            <div class="calendar-confirm"><span><i></i> Appointment slot selected</span><b>Continue →</b></div>
+          </div>
+          <div class="floating-note"><span class="note-icon">✓</span><div><b>Simple appointment requests</b><small>Start your care journey online</small></div></div>
+          <div class="floating-time"><small>YOUR TIME MATTERS</small><b>Easy. Clear. Convenient.</b></div>
+        </div>
+        <div class="hero-foot"><span>01 / PATIENT SERVICES</span><span>COMPASSIONATE CARE · CLEAR COMMUNICATION</span></div>
+      </section>
+
+      
+      <section class="care-benefits" aria-labelledby="benefitsTitle">
+        <div class="benefits-heading">
+          <span class="eyebrow dark-eyebrow">A CLEARER WAY TO GET STARTED</span>
+          <h2 id="benefitsTitle">A simpler first step toward <em>better care.</em></h2>
+          <p>Everything you need to send an appointment request, with the next step made clear.</p>
+        </div>
+        <div class="benefit-grid">
+          <article class="benefit-card">
+            <span class="benefit-number">01</span>
+            <span class="benefit-icon" aria-hidden="true">⌕</span>
+            <h3>Choose your service</h3>
+            <p>Find the department that best matches the care you are looking for.</p>
+          </article>
+          <article class="benefit-card">
+            <span class="benefit-number">02</span>
+            <span class="benefit-icon" aria-hidden="true">▦</span>
+            <h3>Request a suitable time</h3>
+            <p>Share your preferred date and time along with your contact details.</p>
+          </article>
+          <article class="benefit-card">
+            <span class="benefit-number">03</span>
+            <span class="benefit-icon" aria-hidden="true">✓</span>
+            <h3>Get a clear next step</h3>
+            <p>Your request starts as pending until the staff team reviews it.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="booking-section" id="booking">
+        <div class="section-intro">
+          <div class="eyebrow dark-eyebrow">START HERE</div>
+          <h2>Request your<br><em>appointment.</em></h2>
+          <p>Tell us a little about what you need. Our team will review your request and confirm your appointment.</p>
+          <div class="help-note"><span>i</span><p>Your request is not confirmed until a member of our team reviews it and updates its status.</p></div>
+        </div>
+        <div class="form-card">
+          <div class="form-heading"><div><span class="step-label">APPOINTMENT REQUEST</span><h3>Patient details</h3></div><span class="form-step">01 <i>/</i> 01</span></div>
+          <form id="bookingForm" novalidate>
+            <div class="field-grid">
+              <label class="field full"><span>Full name <b>*</b></span><input name="name" autocomplete="name" placeholder="e.g. Jordan Williams" required minlength="2"><small class="error"></small></label>
+              <label class="field"><span>Phone number <b>*</b></span><input name="phone" autocomplete="tel" inputmode="tel" placeholder="e.g. 08012345678" required><small class="error"></small></label>
+              <label class="field"><span>Email address <small>(optional)</small></span><input name="email" type="email" autocomplete="email" placeholder="you@example.com"><small class="error"></small></label>
+              <label class="field full"><span>Department or service <b>*</b></span><select name="department" required><option value="">Select a department</option><option>General Medicine</option><option>Dental Services</option><option>Paediatrics</option><option>Laboratory Services</option></select><small class="error"></small></label>
+              <label class="field"><span>Preferred date <b>*</b></span><input name="date" type="date" required><small class="error"></small></label>
+              <label class="field"><span>Preferred time <b>*</b></span><select name="time" required><option value="">Select a time</option><option>08:00 AM</option><option>09:00 AM</option><option>10:00 AM</option><option>11:00 AM</option><option>12:00 PM</option><option>01:00 PM</option><option>02:00 PM</option><option>03:00 PM</option><option>04:00 PM</option></select><small class="error"></small></label>
+              <label class="field full"><span>Reason for appointment <small>(optional)</small></span><textarea name="reason" rows="3" placeholder="Briefly tell us what you would like assistance with..."></textarea></label>
+            </div>
+            <div class="form-bottom"><span><b>*</b> Required fields</span><button class="primary-btn submit-btn" type="submit">Submit request <span>→</span></button></div>
+            <p class="form-error" id="formError" role="alert"></p>
+          </form>
+          <div class="success-panel" id="successPanel" role="status" aria-live="polite" hidden>
+            <div class="success-icon">✓</div><span class="step-label">REQUEST RECEIVED</span><h3>Thank you. We've got it.</h3>
+            <p>Your appointment request has been submitted. The hospital team will review it. It is currently <b>pending confirmation</b>.</p>
+            <div class="reference-box"><small>YOUR APPOINTMENT REFERENCE</small><strong id="successRef"></strong><button type="button" id="copyRef">Copy reference</button></div>
+            <div class="success-details" id="successDetails"></div>
+            <button class="outline-btn" id="newBooking">Make another request</button>
+          </div>
+        </div>
+      </section>
+      <section class="bottom-strip"><div><span class="strip-icon">✳</span><b>A clearer way to request care.</b></div><span>Simple booking. Human follow-through.</span></section>
+    </main>
+
+    <main id="loginView" hidden>
+      <section class="login-shell">
+        <div class="login-art"><div class="eyebrow"><span class="pulse"></span> MERIDIAN CARE · STAFF</div><h1>Care operations,<br><em>kept in order.</em></h1><p>A focused workspace for reviewing appointment requests and keeping patients informed.</p><div class="login-art-mark">+</div><span class="login-art-caption">STAFF WORKSPACE / 01</span></div>
+        <div class="login-panel"><a class="back-link" href="#" data-view="patient">← Back to patient booking</a><div class="login-symbol">+</div><span class="step-label">SECURE STAFF ACCESS</span><h2>Welcome back.</h2><p>Sign in to manage appointment requests.</p>
+          <form id="loginForm" class="login-form"><label class="field"><span>Username</span><input name="username" autocomplete="username" placeholder="Enter username" required></label><label class="field"><span>Password</span><input name="password" type="password" autocomplete="current-password" placeholder="Enter password" required></label><p class="login-error" id="loginError" role="alert"></p><button class="primary-btn block-btn" type="submit">Sign in to dashboard <span>→</span></button></form>
+          <div class="demo-credentials"><b>DEMO ACCESS</b><div><span>Username</span><strong>admin</strong></div><div><span>Password</span><strong>MeridianDemo24</strong></div><small>Demo access only. This sample stores appointment data in this browser and is not connected to a live hospital system.</small></div>
+        </div>
+      </section>
+    </main>
+
+    <main id="dashboardView" hidden>
+      <div class="dashboard-shell">
+        <aside class="sidebar"><a class="brand sidebar-brand" href="#" data-view="patient"><span class="brand-mark"><svg viewBox="0 0 40 40"><path d="M17 7h6v10h10v6H23v10h-6V23H7v-6h10z" fill="currentColor"/></svg></span><span><strong>MERIDIAN</strong><small>CARE CENTER</small></span></a><div class="side-label">WORKSPACE</div><button class="side-item selected"><span>▦</span> Appointments</button><div class="sidebar-bottom"><div class="staff-avatar">AD</div><div><b>Demo Administrator</b><small>Staff account</small></div><button id="logoutBtn" title="Sign out" aria-label="Sign out">↗</button></div></aside>
+        <section class="dashboard-main">
+          <div class="dash-top"><div><span class="eyebrow dark-eyebrow">STAFF WORKSPACE</span><h1>Appointments</h1><p>Review and manage patient appointment requests.</p></div><div class="dash-top-actions"><span class="today-label" id="todayLabel"></span><button class="outline-btn" id="refreshBtn">↻ Refresh</button></div></div>
+          <div class="stat-grid">
+            <article class="stat-card"><div class="stat-head"><span>Total requests</span><i class="stat-icon neutral">▤</i></div><strong id="statTotal">0</strong><small>All appointment requests</small></article>
+            <article class="stat-card"><div class="stat-head"><span>Pending</span><i class="stat-icon amber">◷</i></div><strong id="statPending">0</strong><small>Awaiting staff review</small></article>
+            <article class="stat-card"><div class="stat-head"><span>Confirmed</span><i class="stat-icon teal">✓</i></div><strong id="statConfirmed">0</strong><small>Approved appointments</small></article>
+            <article class="stat-card"><div class="stat-head"><span>Cancelled</span><i class="stat-icon red">×</i></div><strong id="statCancelled">0</strong><small>Cancelled requests</small></article>
+          </div>
+          <section class="appointments-card">
+            <div class="table-heading"><div><h2>Appointment requests</h2><p>Review patient details and update request status.</p></div><span class="records-count" id="recordCount">0 RECORDS</span></div>
+            <div class="filters"><div class="search-wrap"><span>⌕</span><input id="searchInput" placeholder="Search patient or reference..." aria-label="Search patient or reference"></div><select id="statusFilter" aria-label="Filter by status"><option value="all">All statuses</option><option>Pending</option><option>Confirmed</option><option>Cancelled</option><option>Completed</option></select><input id="dateFilter" type="date" aria-label="Filter by appointment date"><button class="clear-filter" id="clearFilters">Clear filters</button></div>
+            <div class="table-wrap"><table><thead><tr><th>REFERENCE / PATIENT</th><th>DEPARTMENT</th><th>APPOINTMENT DATE</th><th>TIME</th><th>STATUS</th><th></th></tr></thead><tbody id="appointmentsBody"></tbody></table></div>
+            <div class="empty-state" id="emptyState" hidden><span>▤</span><b>No appointments found</b><p>Try adjusting your search or filters.</p></div>
+            <div class="table-footer"><span id="tableSummary"></span><span>DEMO DATA · LOCAL STORAGE</span></div>
+          </section>
+          <p class="dashboard-disclaimer">This is a demonstration dashboard. Data is stored in this browser only and is not shared with a hospital system.</p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer"><div class="footer-main"><div class="footer-brand"><span class="brand-mark"><svg viewBox="0 0 40 40"><path d="M17 7h6v10h10v6H23v10h-6V23H7v-6h10z" fill="currentColor"/></svg></span><span><strong>MERIDIAN CARE</strong><small>FICTIONAL DEMONSTRATION HOSPITAL</small></span></div><div class="footer-note">A demonstration of a simpler appointment experience.</div></div><div class="footer-bottom"><span>© <span id="year"></span> Meridian Care Center. Demo environment.</span><span class="developer">System developed by LiveVault · <a href="https://wa.me/07016479713" target="_blank" rel="noopener">WhatsApp: 07016479713</a></span></div></footer>
+  </div>
+  <div class="modal-backdrop" id="detailModal" hidden><section class="detail-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><div><span class="step-label">APPOINTMENT DETAILS</span><h2 id="modalTitle">Request details</h2></div><button class="icon-btn" id="closeModal" aria-label="Close">×</button></div><div id="modalContent"></div><div class="modal-actions" id="modalActions"></div></section></div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
