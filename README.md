@@ -1,49 +1,117 @@
-# Meridian Care — Hospital Appointment Booking Demo
+# Meridian Care — Supabase-enabled Hospital Demonstration
 
-A responsive, front-end demonstration of a fictional hospital appointment request and staff-management workflow.
+This package preserves the existing Meridian Care patient-facing website and adds a shared Supabase/PostgreSQL data layer. It also keeps the original local browser demo as a fallback when Supabase is not configured.
 
-## Run locally
+## What is included
 
-No build step, package installation, database server, or paid service is required.
+- Patient appointment form with validation and booking reference.
+- Patient booking button that scrolls directly to the booking form.
+- Staff sign-in using Supabase Auth in cloud mode.
+- Appointment dashboard with search, filters, details, counters and status changes.
+- Patient directory and appointment history, grouped from shared appointment records.
+- Monthly and department analytics.
+- CSV and Excel (`.csv`, `.xlsx`, `.xls`) historical appointment import.
+- CSV export and import template.
+- Live refresh of the staff dashboard when another device creates or updates an appointment.
+- Database status history and audit log trigger.
+- Local demo mode if `config.js` has empty Supabase values.
 
-1. Extract the ZIP file.
-2. Open `index.html` in a modern browser.
-3. Select **Staff portal** to open the staff login.
+> This is a demonstration project. Use fictional data only. It is not a production electronic medical record or a clinical system. Do not upload real patient information.
 
-For the most reliable local testing, serve the folder with any static web server (for example, VS Code Live Server or `python -m http.server 8000`) and visit `http://localhost:8000`.
+## A. Create your Supabase project
 
-## Demo staff credentials
+1. Open [Supabase](https://supabase.com/) and create a project.
+2. Save the database password securely. You do not need it in the website.
+3. In the Supabase project, open **SQL Editor**.
+4. Open `supabase/schema.sql` from this project, copy the complete file, paste it into SQL Editor and run it.
+5. The script creates the appointment tables, staff access list, RLS policies, status history, audit log, indexes and Realtime publication entry. It also adds six fictional sample appointments.
 
+The SQL script deliberately gives signed-out visitors permission to **insert pending appointment requests only**. It does not allow public reads of patient records. Only active users listed in `staff_profiles` can read and manage appointments.
+
+## B. Create the staff login
+
+1. In Supabase, open **Authentication → Users**.
+2. Choose **Add user** and create:
+   - Email: `admin@meridian-demo.test`
+   - Password: choose a password for your demo
+   - Confirm/auto-confirm the email if the dashboard offers that option for manually created users.
+3. Copy the new user's **UUID** from the Users list.
+4. Return to **SQL Editor** and run this statement, replacing the placeholder with the exact UUID:
+
+```sql
+insert into public.staff_profiles (id, full_name, role, is_active)
+values ('PASTE-THE-AUTH-USER-UUID-HERE', 'Meridian Demo Administrator', 'admin', true)
+on conflict (id) do update
+set full_name = excluded.full_name, role = 'admin', is_active = true;
+```
+
+This staff profile step is required. Creating an Auth user alone does not grant access to patient bookings.
+
+## C. Connect the website to Supabase
+
+1. In Supabase, open **Project Settings → API** (or the API Keys section).
+2. Copy the **Project URL**.
+3. Copy the **publishable key**. A legacy `anon` public key also works with the browser client.
+4. Open `config.js` in this project and replace the blank values:
+
+```js
+window.MERIDIAN_SUPABASE_CONFIG = {
+  url: "https://YOUR-PROJECT-REF.supabase.co",
+  publicKey: "YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY",
+  staffEmail: "admin@meridian-demo.test"
+};
+```
+
+**Never paste a Supabase secret key or legacy `service_role` key into `config.js`, HTML, frontend JavaScript, GitHub or a public Vercel deployment.** Only the publishable/anon key belongs in browser code. Database access is limited by grants and Row Level Security.
+
+## D. Run the website locally
+
+You can use VS Code Live Server:
+
+1. Open the extracted project folder in VS Code.
+2. Open `index.html`.
+3. Choose **Open with Live Server**.
+
+Python is not required. The Supabase JavaScript client and Excel reader are loaded from CDNs, so the browser needs an internet connection.
+
+If you have not filled in `config.js`, the website stays in local demo mode:
 - Username: `admin`
 - Password: `MeridianDemo24`
+- Records are stored only in that browser.
 
-## Included
+Once the Supabase URL and public key are configured, the website switches to Supabase mode. Staff must use the Auth email and password you created above.
 
-- Patient appointment request form with required-field, phone, email, and past-date validation.
-- Unique appointment reference generation and confirmation summary.
-- Staff login demonstration.
-- Dashboard totals for total, pending, confirmed, and cancelled appointments.
-- Appointment details modal and status actions: Pending → Confirmed / Cancelled; Confirmed → Completed / Cancelled.
-- Search by patient name or appointment reference.
-- Status and appointment-date filters.
-- Six fictional sample appointments across four fictional departments.
-- Responsive layouts for desktop, tablet, and mobile.
-- Developer WhatsApp contact in the footer.
+## E. Deploy to Vercel
 
-## Data and security limitations
+1. Upload/deploy the project folder to Vercel as a static website.
+2. Ensure the deployed root includes `index.html`, `styles.css`, `app.js`, `enhancements.js`, `config.js`, and the `supabase/` folder.
+3. After deployment, test a booking from a separate browser or phone.
+4. Sign into the Staff portal on another device. The booking should appear in the dashboard.
+5. Confirm the appointment and keep the staff dashboard open on the first device; the status change should update through Supabase Realtime.
 
-This is a **front-end demo**, not a production hospital system.
+Because this is a static frontend, `config.js` is served publicly. That is expected for the Supabase publishable key. Do not store passwords or secret keys in it.
 
-- Appointment records are saved in the browser's `localStorage` on the device/browser where they were created.
-- Staff login is a demonstration-only client-side gate. Credentials are visible in `app.js` and are not secure authentication.
-- There is no shared database, server-side validation, access control, audit log, email/SMS notification, backup, or cross-device synchronization.
-- Clearing browser storage removes locally saved demo appointments.
-- Do not enter real patient information or use this demo for clinical operations.
+## F. How to verify a booking
 
-A production deployment must use a secure backend, server-side authentication and authorization, encrypted transport, validated persistence, audit logging, backups, and appropriate privacy/security controls.
+1. Open the patient website and submit a fictional appointment.
+2. The patient receives a booking reference and a Pending confirmation message.
+3. In Supabase, open **Table Editor → appointments**. The new record should be visible.
+4. Open the Staff portal on any device, sign in with the Supabase staff account and review the appointment.
+5. Confirm, cancel or complete the appointment. Status changes are recorded in `appointment_status_history` and `audit_logs`.
 
-## Project files
+The patient directory and analytics are derived from the shared appointment records. The import tool inserts valid historical appointment rows into the same shared table. Imported rows need a valid appointment date and patient name.
 
-- `index.html` — page structure and interfaces
-- `styles.css` — visual design and responsive styling
-- `app.js` — demo data, validation, local persistence, login, filters, and appointment workflow
+## What remains outside this demo
+
+This project shares appointment requests and staff workflow. It does not yet include patient self-service accounts/status lookup, a full separate clinical patient chart, doctor calendars, conflict detection, email/SMS notifications, consent workflows, identity verification, anti-spam/rate limiting, or a complete security/compliance review.
+
+Before any real hospital use, commission a qualified security review; implement least-privilege roles, stronger server-side validation and anti-abuse controls; establish backup/restore and incident procedures; and review applicable Nigeria Data Protection Act requirements. Keep real patient data out of this demo until those controls are in place.
+
+## Project structure
+
+- `index.html` — patient website, staff portal and dashboard panels
+- `styles.css` — responsive styling and accessibility refinements
+- `app.js` — booking, local/cloud data adapter, authentication, staff dashboard and realtime
+- `enhancements.js` — patient directory, analytics, CSV/Excel import/export and video script
+- `config.js` — Supabase Project URL and public key placeholders
+- `supabase/schema.sql` — PostgreSQL schema, grants, RLS policies, audit trigger and fictional seed data

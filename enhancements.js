@@ -2,7 +2,7 @@
   "use strict";
   const KEY="meridianCareAppointments_v1";
   const $=s=>document.querySelector(s);
-  const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch{return []}};
+  const read=()=>{try{return window.MERIDIAN_DATA?window.MERIDIAN_DATA.getAppointments():(JSON.parse(localStorage.getItem(KEY)||"[]"))}catch{return []}};
   const write=rows=>localStorage.setItem(KEY,JSON.stringify(rows));
   const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const fmtDate=s=>s?new Date(s+"T12:00:00").toLocaleDateString("en",{day:"numeric",month:"short",year:"numeric"}):"—";
@@ -56,6 +56,7 @@
     const pick=(...names)=>{for(const n of names){const v=row[n];if(v!==undefined&&v!==null&&String(v).trim()!=="")return String(v).trim();}return "";};
     const name=pick("name","patientname","fullname","patient");if(!name)return null;
     const date=dateISO(pick("date","appointmentdate","visitdate"));
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(date))return null;
     let status=pick("status","appointmentstatus")||"Pending";status=status[0].toUpperCase()+status.slice(1).toLowerCase();if(!["Pending","Confirmed","Cancelled","Completed"].includes(status))status="Pending";
     return {id:pick("id","reference","appointmentid","ref")||("MC-IMP-"+Math.random().toString(36).slice(2,8).toUpperCase()),name,phone:pick("phone","phonenumber","mobile","telephone"),email:pick("email","emailaddress"),department:pick("department","service","specialty")||"Unspecified",date,time:pick("time","appointmenttime","visittime")||"Not specified",reason:pick("reason","notes","description"),status,createdAt:new Date().toISOString()};
   }
@@ -68,11 +69,16 @@
       else throw new Error("Excel import needs an internet connection to load the spreadsheet reader. Try CSV or reconnect and reload.");
       const incoming=source.map(normalize).filter(Boolean), existing=read(), ids=new Set(existing.map(a=>a.id)), fresh=incoming.filter(a=>!ids.has(a.id));
       if(!fresh.length)throw new Error("No new valid patient rows were found. Check that the file has a patient name column and unique references.");
-      write([...fresh,...existing]);feedback.textContent=`Successfully imported ${fresh.length} record(s). ${incoming.length-fresh.length} duplicate reference(s) skipped.`;feedback.className="import-feedback success-text";selectedFile=null;$("#historyFile").value="";$("#selectedFile").textContent="No file selected";
+      if(window.MERIDIAN_DATA) await window.MERIDIAN_DATA.importAppointments(fresh); else write([...fresh,...existing]);
+      feedback.textContent=`Successfully imported ${fresh.length} record(s). ${incoming.length-fresh.length} duplicate reference(s) skipped.`;feedback.className="import-feedback success-text";selectedFile=null;$("#historyFile").value="";$("#selectedFile").textContent="No file selected";
     }catch(err){feedback.textContent=err.message||"Import failed. Check the file format and headings.";feedback.className="import-feedback error-text";}
   });
   const scriptText=`Welcome to Meridian Care, a hospital appointment and records workflow demonstration designed to connect the patient experience with day-to-day hospital operations.\n\nA patient chooses a department, enters their contact details and preferred appointment time, and submits a request. A unique reference is generated, while the request remains pending until staff review it.\n\nThe care team signs in to a central dashboard, searches requests, opens patient details and updates each appointment as pending, confirmed, cancelled or completed.\n\nPatient records bring contact information and appointment history together, making it easier to find returning patients and understand their previous visits.\n\nThe reporting view summarises monthly activity and department demand. Existing records can be imported from CSV or Excel to demonstrate historical data onboarding.\n\nThis prototype illustrates the workflow. A live hospital deployment would connect to secure server-side services, verified staff access, messaging and protected clinical records.`;
   $("#copyVideoScript")?.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(scriptText);$("#copyVideoScript").textContent="Copied";}catch{$("#copyVideoScript").textContent="Select script to copy";}});
+  window.addEventListener("meridian:data-changed",()=>{
+    if(currentPanel==="patients")renderPatients();
+    if(currentPanel==="analytics")renderAnalytics();
+  });
   // Ensure newly-added dashboard panels follow the existing view navigation.
   document.querySelectorAll('[data-view="dashboard"]').forEach(b=>b.addEventListener("click",()=>setPanel("appointments")));
   $("#refreshBtn")?.addEventListener("click",()=>{if(currentPanel==="patients")renderPatients();if(currentPanel==="analytics")renderAnalytics();});
