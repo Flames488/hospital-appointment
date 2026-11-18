@@ -431,3 +431,38 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   transform: translateY(-160%);
 }
 .skip-link:focus { transform: translateY(0); }
+
+/* Patient booking navigation: explicit high-contrast styling.
+   The patient control uses an ID (not data-view), so target it directly. */
+.topnav #patientBookingNav {
+  background: #08786f !important;
+  color: #ffffff !important;
+  border: 1px solid #06665f !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+  min-height: 48px;
+  padding: 0 19px;
+}
+.topnav #patientBookingNav span {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+.topnav #patientBookingNav:hover,
+.topnav #patientBookingNav:focus-visible {
+  background: #065f59 !important;
+  color: #ffffff !important;
+}
+.topnav #patientBookingNav.active {
+  background: #08786f !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(8,120,111,.2), 0 8px 18px rgba(8,120,111,.2);
+}
+@media (max-width: 650px) {
+  .topnav #patientBookingNav {
+    min-height: 49px;
+    padding-inline: 7px;
+    font-size: 13px !important;
+  }
+}
