@@ -150,3 +150,12 @@ To verify the flow:
 5. Change its status and confirm the status changes in Supabase.
 
 This remains a demonstration system. Do not use real patient or clinical data.
+
+
+## Staff password and account security
+
+- The staff login password is a Supabase Authentication password, not your personal Supabase Dashboard password.
+- Change/reset the Meridian staff user's password from Supabase Dashboard → Authentication → Users → select the staff user → send a password recovery email or update the password using the secure admin workflow.
+- Do not put passwords in `config.js`, HTML, JavaScript, or share your Supabase Dashboard owner credentials with the client.
+- To give the client access, create a separate Supabase Auth user for them and add that user's Auth UUID to `public.staff_profiles` with `is_active = true`.
+- The login password field now includes a show/hide control.

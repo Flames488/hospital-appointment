@@ -130,6 +130,15 @@
   function makeReference(){let id;do{id="MC-"+isoDate(new Date()).replaceAll("-","").slice(2)+"-"+Math.random().toString(36).slice(2,6).toUpperCase();}while(appointments.some(a=>a.id===id));return id;}
   $("#copyRef").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("#successRef").textContent);showToast("Reference copied.");}catch(e){showToast("Reference: "+$("#successRef").textContent);}});
   $("#newBooking").addEventListener("click",()=>{$("#successPanel").hidden=true;$("#bookingForm").hidden=false;$("#bookingForm").reset();dateInput.min=isoDate(today);$("#booking").scrollIntoView({behavior:"smooth"});});
+  const passwordToggle=$("#toggleStaffPassword"), staffPassword=$("#staffPassword");
+  if(passwordToggle&&staffPassword){
+    passwordToggle.addEventListener("click",()=>{
+      const reveal=staffPassword.type==="password";
+      staffPassword.type=reveal?"text":"password";
+      passwordToggle.setAttribute("aria-pressed",String(reveal));
+      passwordToggle.setAttribute("aria-label",reveal?"Hide password":"Show password");
+    });
+  }
   $("#loginForm").addEventListener("submit",async e=>{
     e.preventDefault();const form=e.currentTarget,d=Object.fromEntries(new FormData(form));
     const submit=form.querySelector('button[type="submit"]');if(submit){submit.disabled=true;submit.textContent="Signing in…";}
