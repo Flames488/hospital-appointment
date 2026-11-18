@@ -520,3 +520,21 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .workspace-menu-toggle[aria-expanded="true"] span:first-child{transform:translateY(7px) rotate(45deg)}
 .workspace-menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
 .workspace-menu-toggle[aria-expanded="true"] span:last-child{transform:translateY(-7px) rotate(-45deg)}
+
+
+/* Homepage demo video action */
+.hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:8px}
+.hero-actions .primary-btn{margin:0}
+.demo-video-cta{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:13px 19px;border:1px solid rgba(14,126,117,.28);border-radius:8px;color:#087d73;background:#fff;text-decoration:none;font-size:14px;font-weight:750;transition:background .2s,transform .2s,border-color .2s}
+.demo-video-cta:hover{background:#edf8f6;border-color:#087d73;transform:translateY(-1px)}
+.demo-video-cta span{font-size:13px}
+@media(max-width:560px){.hero-actions{align-items:stretch;flex-direction:column}.hero-actions a{width:100%;box-sizing:border-box}}
+/* More legible presentation walkthrough */
+#panel-walkthrough .panel-heading .step-label{font-size:13px;letter-spacing:2.2px;font-weight:800}
+#panel-walkthrough .panel-heading h2{font-size:clamp(25px,3vw,30px);line-height:1.25;margin:10px 0}
+#panel-walkthrough .panel-heading p{font-size:15px;line-height:1.65;max-width:720px}
+#panel-walkthrough .walk-card{padding:21px}
+#panel-walkthrough .walk-card>b{font-size:13px;letter-spacing:1.4px}
+#panel-walkthrough .walk-card h3{font-size:19px;line-height:1.35;margin:10px 0}
+#panel-walkthrough .walk-card p{font-size:14px;line-height:1.7}
+@media(max-width:640px){#panel-walkthrough .panel-heading .step-label{font-size:12px}#panel-walkthrough .panel-heading p{font-size:14px}#panel-walkthrough .walkthrough-grid{grid-template-columns:1fr}#panel-walkthrough .walk-card h3{font-size:18px}#panel-walkthrough .walk-card p{font-size:14px}}
