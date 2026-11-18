@@ -1,6 +1,3 @@
--- Meridian Care shared demo database (Supabase PostgreSQL)
--- Run once in Supabase Dashboard > SQL Editor.
--- Use fictional data only. This is an appointment workflow demo, not a production EHR.
 
 create table if not exists public.staff_profiles (
   id uuid primary key references auth.users(id) on delete cascade,

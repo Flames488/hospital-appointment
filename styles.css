@@ -447,3 +447,33 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .connection-pill.cloud{background:#e5f5f1;color:#08776b}
 .connection-pill.cloud:before{content:"";width:7px;height:7px;border-radius:50%;background:#0d9488;box-shadow:0 0 0 3px rgba(13,148,136,.12)}
 @media(max-width:720px){.dash-top-actions{flex-wrap:wrap;justify-content:flex-start}.connection-pill{order:0}}
+
+
+/* Staff portal navigation contrast fix — keep label readable on dark button */
+.topnav .nav-link[data-view="staff"] {
+  background: #172a35 !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  border: 1px solid #294653 !important;
+  text-shadow: none !important;
+}
+.topnav .nav-link[data-view="staff"] span,
+.topnav .nav-link[data-view="staff"] .nav-icon {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+.topnav .nav-link[data-view="staff"]:hover,
+.topnav .nav-link[data-view="staff"]:focus-visible {
+  background: #0f2029 !important;
+  color: #ffffff !important;
+  outline: 3px solid rgba(13,148,136,.28);
+  outline-offset: 2px;
+}
+.topnav .nav-link[data-view="staff"].active {
+  background: #0f2029 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(23,42,53,.18), 0 8px 18px rgba(16,28,37,.18);
+}
+@media (max-width: 720px) {
+  .topnav .nav-link { min-height: 44px; padding: 10px 12px !important; font-size: 14px !important; }
+}

@@ -115,3 +115,38 @@ Before any real hospital use, commission a qualified security review; implement 
 - `enhancements.js` — patient directory, analytics, CSV/Excel import/export and video script
 - `config.js` — Supabase Project URL and public key placeholders
 - `supabase/schema.sql` — PostgreSQL schema, grants, RLS policies, audit trigger and fictional seed data
+
+
+## G. Verify the Supabase connection
+
+1. Confirm `config.js` contains the correct Project URL and publishable/anon public key.
+2. Open the deployed website and submit a test appointment using fictional details.
+3. In Supabase, open **Table Editor → appointments** and confirm the new row appears with status `Pending`.
+4. Open the Staff portal and sign in with the Supabase Auth email and password. The same appointment should appear.
+5. Change the appointment status to `Confirmed`, then refresh the Supabase table and confirm the status changed.
+6. For a SQL check, run `select appointment_reference, patient_name, status, created_at from public.appointments order by created_at desc limit 10;` in SQL Editor.
+
+The `SUPABASE CONNECTED` badge indicates that the frontend configuration values are present; the test booking and staff update verify actual database access. If a booking fails, open the browser developer console (F12 → Console) and inspect the error. Common causes are an incorrect URL/key, SQL schema not applied, RLS policies missing, or the site still serving an older `config.js`.
+
+
+## Patient bookings in the staff dashboard
+
+When Supabase mode is configured, patient requests are inserted into `public.appointments`.
+Staff sign in through Supabase Auth. The app checks that the signed-in user's UUID exists
+in `public.staff_profiles` and is active, then loads the shared appointments table into
+the Appointments dashboard. Staff can search/filter requests, open View details, and
+change statuses. Realtime refresh is subscribed while the staff session is active.
+
+If a patient submission fails, the booking form now displays the Supabase error message
+returned by the database (for example, a missing table, invalid API key, or denied insert).
+Use that exact message to diagnose the setup. Do not switch to local demo mode as a
+substitute for checking a failed cloud submission.
+
+To verify the flow:
+1. Submit a fictional patient booking on the public page.
+2. Confirm it appears in Supabase Table Editor > public > appointments.
+3. Sign into the Staff portal using the Supabase Auth email and password.
+4. Confirm the same booking appears under Appointments in the dashboard.
+5. Change its status and confirm the status changes in Supabase.
+
+This remains a demonstration system. Do not use real patient or clinical data.

@@ -114,7 +114,15 @@
     const submit=form.querySelector('button[type="submit"]');
     if(submit){submit.disabled=true;submit.dataset.label=submit.textContent;submit.textContent="Submitting…";}
     try{await persistNewAppointment(record);}
-    catch(err){console.error(err);$("#formError").textContent=cloudMode?"We could not save your request. Check your connection and try again.":(err.message||"Could not save the booking.");if(submit){submit.disabled=false;submit.textContent=submit.dataset.label||"Submit request";}return;}
+    catch(err){
+      console.error("Meridian booking submission failed:",err);
+      const detail=[err?.message,err?.details,err?.hint,err?.code?`Code: ${err.code}`:null].filter(Boolean).join(" — ");
+      $("#formError").textContent=cloudMode
+        ? `Your request was not saved. ${detail || "Check the Supabase connection, appointments table and insert permissions."}`
+        : (detail || "Could not save the booking in this browser.");
+      if(submit){submit.disabled=false;submit.textContent=submit.dataset.label||"Submit request";}
+      return;
+    }
     finally{if(submit){submit.disabled=false;submit.textContent=submit.dataset.label||"Submit request";}}
     $("#successRef").textContent=id;$("#successDetails").innerHTML=`<b>${escapeHtml(record.name)}</b><br>${escapeHtml(record.department)} · ${formatDate(record.date)} at ${escapeHtml(record.time)}<br>${escapeHtml(record.phone)}`;
     form.hidden=true;$("#successPanel").hidden=false;showToast(cloudMode?"Appointment saved to the shared database.":"Appointment request submitted.");
@@ -135,7 +143,12 @@
         if(d.username!==DEMO_LOGIN.username||d.password!==DEMO_LOGIN.password)throw new Error("The username or password is incorrect. Try the demo credentials shown below.");
       }
       sessionStorage.setItem("meridianStaffSession","yes");$("#loginError").textContent="";form.reset();showView("dashboard");
-    }catch(err){console.error(err);$("#loginError").textContent=cloudMode?"Sign-in failed. Check your Supabase Auth account and staff access.":err.message;}
+    }catch(err){
+      console.error("Meridian staff sign-in failed:",err);
+      $("#loginError").textContent=cloudMode
+        ? (err?.message || "Sign-in failed. Check your Supabase Auth account and staff_profiles access.")
+        : (err?.message || "Sign-in failed.");
+    }
     finally{if(submit){submit.disabled=false;submit.textContent="Sign in to dashboard →";}}
   });
   $("#logoutBtn").addEventListener("click",async()=>{
@@ -144,7 +157,7 @@
   });
   $("#refreshBtn").addEventListener("click",async()=>{
     try{await refreshAppointments();renderDashboard();showToast("Appointment list refreshed.");}
-    catch(err){console.error(err);showToast("Could not refresh. Check the database connection and staff permissions.");}
+    catch(err){console.error("Meridian dashboard refresh failed:",err);showToast(err?.message || "Could not refresh. Check the database connection and staff permissions.");}
   });
   ["searchInput","statusFilter","dateFilter"].forEach(id=>$("#"+id).addEventListener(id==="searchInput"?"input":"change",renderTable));
   $("#clearFilters").addEventListener("click",()=>{$("#searchInput").value="";$("#statusFilter").value="all";$("#dateFilter").value="";renderTable();});
