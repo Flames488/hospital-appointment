@@ -488,3 +488,35 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .password-toggle .eye-closed{display:none}
 .password-toggle[aria-pressed="true"] .eye-open{display:none}
 .password-toggle[aria-pressed="true"] .eye-closed{display:block}
+
+
+/* Responsive staff workspace navigation */
+.workspace-menu-toggle{display:none;align-items:center;justify-content:center;flex-direction:column;gap:5px;width:46px;height:44px;margin-left:auto;border:1px solid rgba(255,255,255,.18);border-radius:10px;background:rgba(255,255,255,.07);cursor:pointer}
+.workspace-menu-toggle span{display:block;width:19px;height:2px;border-radius:2px;background:#e8f5f3;transition:transform .2s,opacity .2s}
+.side-item{font-size:14px!important;font-weight:650;line-height:1.35;padding:13px 14px!important;border-radius:9px;text-align:left;min-height:46px}
+.side-item span{font-size:17px;width:25px!important;vertical-align:middle}
+.side-nav{gap:8px!important}
+@media(max-width:760px){
+  .dashboard-shell{display:block!important}
+  .sidebar{position:relative;display:flex!important;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px!important;padding:12px 16px!important;min-height:68px;overflow:visible!important}
+  .sidebar-brand{margin:0!important;flex:0 0 auto}
+  .workspace-menu-toggle{display:flex;flex:0 0 46px}
+  .side-label{display:none!important}
+  .side-nav{display:none!important;order:3;flex:0 0 100%;width:100%;margin:4px 0 2px!important;padding:8px 0 2px;border-top:1px solid rgba(255,255,255,.13);overflow:visible!important}
+  .sidebar.menu-open .side-nav{display:grid!important;grid-template-columns:1fr 1fr;gap:8px!important}
+  .side-item{width:100%!important;min-width:0;white-space:normal!important;padding:13px 12px!important;font-size:14px!important}
+  .sidebar-bottom{margin:0!important;padding:0!important;flex:0 0 auto;gap:6px}
+  .sidebar-bottom>div:not(.staff-avatar){display:none!important}
+  .sidebar-bottom .staff-avatar{display:none!important}
+  .sidebar-bottom button{min-width:40px;min-height:40px}
+  .dashboard-main{padding:24px 4%!important}
+}
+@media(max-width:420px){
+  .sidebar.menu-open .side-nav{grid-template-columns:1fr!important}
+  .side-item{font-size:15px!important;min-height:48px}
+  .dashboard-main{padding:20px 4%!important}
+}
+.workspace-menu-toggle:focus-visible{outline:3px solid rgba(112,208,196,.55);outline-offset:3px}
+.workspace-menu-toggle[aria-expanded="true"] span:first-child{transform:translateY(7px) rotate(45deg)}
+.workspace-menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+.workspace-menu-toggle[aria-expanded="true"] span:last-child{transform:translateY(-7px) rotate(-45deg)}

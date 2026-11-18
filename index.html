@@ -172,8 +172,8 @@
 
     <main id="dashboardView" hidden>
       <div class="dashboard-shell">
-        <aside class="sidebar"><a class="brand sidebar-brand" href="#" data-view="patient"><span class="brand-mark"><svg viewBox="0 0 40 40"><path d="M17 7h6v10h10v6H23v10h-6V23H7v-6h10z" fill="currentColor"/></svg></span><span><strong>MERIDIAN</strong><small>CARE CENTER</small></span></a><div class="side-label">WORKSPACE</div>
-          <nav class="side-nav" aria-label="Staff workspace">
+        <aside class="sidebar"><a class="brand sidebar-brand" href="#" data-view="patient"><span class="brand-mark"><svg viewBox="0 0 40 40"><path d="M17 7h6v10h10v6H23v10h-6V23H7v-6h10z" fill="currentColor"/></svg></span><span><strong>MERIDIAN</strong><small>CARE CENTER</small></span></a><button class="workspace-menu-toggle" id="workspaceMenuToggle" type="button" aria-expanded="false" aria-controls="workspaceNav" aria-label="Open workspace menu"><span></span><span></span><span></span></button><div class="side-label">WORKSPACE</div>
+          <nav class="side-nav" id="workspaceNav" aria-label="Staff workspace">
             <button class="side-item selected" data-panel="appointments"><span>▦</span> Appointments</button>
             <button class="side-item" data-panel="patients"><span>♙</span> Patient records</button>
             <button class="side-item" data-panel="analytics"><span>▥</span> Data analysis</button>

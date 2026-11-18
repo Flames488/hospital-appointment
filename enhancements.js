@@ -84,4 +84,23 @@
   $("#refreshBtn")?.addEventListener("click",()=>{if(currentPanel==="patients")renderPatients();if(currentPanel==="analytics")renderAnalytics();});
   const dashboardObserver=new MutationObserver(()=>{if(!$("#dashboardView").hidden&&currentPanel==="patients")renderPatients();if(!$("#dashboardView").hidden&&currentPanel==="analytics")renderAnalytics();});
   dashboardObserver.observe($("#dashboardView"),{attributes:true,attributeFilter:["hidden"]});
+
+  // Accessible collapsible workspace navigation on tablet and mobile.
+  const workspaceToggle = $("#workspaceMenuToggle");
+  const workspaceSidebar = $(".sidebar");
+  const workspaceNav = $("#workspaceNav");
+  if (workspaceToggle && workspaceSidebar && workspaceNav) {
+    workspaceToggle.addEventListener("click", () => {
+      const isOpen = workspaceSidebar.classList.toggle("menu-open");
+      workspaceToggle.setAttribute("aria-expanded", String(isOpen));
+      workspaceToggle.setAttribute("aria-label", isOpen ? "Close workspace menu" : "Open workspace menu");
+    });
+    workspaceNav.querySelectorAll("[data-panel]").forEach(item => {
+      item.addEventListener("click", () => {
+        workspaceSidebar.classList.remove("menu-open");
+        workspaceToggle.setAttribute("aria-expanded", "false");
+        workspaceToggle.setAttribute("aria-label", "Open workspace menu");
+      });
+    });
+  }
 })();
