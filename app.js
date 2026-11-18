@@ -99,7 +99,7 @@
   const dateInput=$('input[name="date"]'); dateInput.min=isoDate(today);
   $("#bookingForm").addEventListener("submit",async e=>{
     e.preventDefault();const form=e.currentTarget;let valid=true;
-    $$(".field",form).forEach(f=>{f.classList.remove("invalid");$(".error",f).textContent="";});
+    $$(".field",form).forEach(f=>{f.classList.remove("invalid");const error=$(".error",f);if(error)error.textContent="";});
     const data=Object.fromEntries(new FormData(form).entries());
     const setError=(name,msg)=>{const input=form.elements[name],field=input.closest(".field");field.classList.add("invalid");$(".error",field).textContent=msg;valid=false;};
     if(!data.name.trim()||data.name.trim().length<2)setError("name","Enter the patient's full name.");
