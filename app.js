@@ -34,6 +34,10 @@
     if(view==="dashboard")renderDashboard();
   }
   $$("[data-view]").forEach(el=>el.addEventListener("click",e=>{e.preventDefault();showView(el.dataset.view);}));
+  $("#patientBookingNav").addEventListener("click",()=>{
+    showView("patient");
+    window.setTimeout(()=>$("#booking").scrollIntoView({behavior:"smooth",block:"start"}),50);
+  });
   $("#headerBook").addEventListener("click",e=>{
     e.preventDefault();
     if($("#patientView").hidden)showView("patient");
