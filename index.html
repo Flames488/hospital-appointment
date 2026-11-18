@@ -147,6 +147,16 @@
           </div>
         </div>
       </section>
+
+      <section class="workflow-section" aria-labelledby="workflowTitle">
+        <div class="benefits-heading"><span class="eyebrow dark-eyebrow">HOW THE DEMO WORKS</span><h2 id="workflowTitle">From patient request to <em>hospital follow-through.</em></h2><p>A simple end-to-end walkthrough for a hospital team evaluating the workflow.</p></div>
+        <div class="workflow-steps">
+          <article><b>01</b><h3>Patient submits</h3><p>The patient selects a department, preferred date and time, then receives a unique reference.</p></article>
+          <article><b>02</b><h3>Staff reviews</h3><p>Staff sign in, search the request, inspect patient details and confirm or decline the request.</p></article>
+          <article><b>03</b><h3>Records update</h3><p>The patient profile and appointment history reflect the latest status in the demonstration workspace.</p></article>
+          <article><b>04</b><h3>Leaders analyse</h3><p>Monthly activity and department breakdowns help demonstrate operational reporting.</p></article>
+        </div>
+      </section>
       <section class="bottom-strip"><div><span class="strip-icon">✳</span><b>A clearer way to request care.</b></div><span>Simple booking. Human follow-through.</span></section>
     </main>
 
@@ -162,7 +172,14 @@
 
     <main id="dashboardView" hidden>
       <div class="dashboard-shell">
-        <aside class="sidebar"><a class="brand sidebar-brand" href="#" data-view="patient"><span class="brand-mark"><svg viewBox="0 0 40 40"><path d="M17 7h6v10h10v6H23v10h-6V23H7v-6h10z" fill="currentColor"/></svg></span><span><strong>MERIDIAN</strong><small>CARE CENTER</small></span></a><div class="side-label">WORKSPACE</div><button class="side-item selected"><span>▦</span> Appointments</button><div class="sidebar-bottom"><div class="staff-avatar">AD</div><div><b>Demo Administrator</b><small>Staff account</small></div><button id="logoutBtn" title="Sign out" aria-label="Sign out">↗</button></div></aside>
+        <aside class="sidebar"><a class="brand sidebar-brand" href="#" data-view="patient"><span class="brand-mark"><svg viewBox="0 0 40 40"><path d="M17 7h6v10h10v6H23v10h-6V23H7v-6h10z" fill="currentColor"/></svg></span><span><strong>MERIDIAN</strong><small>CARE CENTER</small></span></a><div class="side-label">WORKSPACE</div>
+          <nav class="side-nav" aria-label="Staff workspace">
+            <button class="side-item selected" data-panel="appointments"><span>▦</span> Appointments</button>
+            <button class="side-item" data-panel="patients"><span>♙</span> Patient records</button>
+            <button class="side-item" data-panel="analytics"><span>▥</span> Data analysis</button>
+            <button class="side-item" data-panel="import"><span>⇧</span> Import records</button>
+            <button class="side-item" data-panel="walkthrough"><span>▷</span> Demo walkthrough</button>
+          </nav><div class="sidebar-bottom"><div class="staff-avatar">AD</div><div><b>Demo Administrator</b><small>Staff account</small></div><button id="logoutBtn" title="Sign out" aria-label="Sign out">↗</button></div></aside>
         <section class="dashboard-main">
           <div class="dash-top"><div><span class="eyebrow dark-eyebrow">STAFF WORKSPACE</span><h1>Appointments</h1><p>Review and manage patient appointment requests.</p></div><div class="dash-top-actions"><span class="today-label" id="todayLabel"></span><button class="outline-btn" id="refreshBtn">↻ Refresh</button></div></div>
           <div class="stat-grid">
@@ -178,7 +195,35 @@
             <div class="empty-state" id="emptyState" hidden><span>▤</span><b>No appointments found</b><p>Try adjusting your search or filters.</p></div>
             <div class="table-footer"><span id="tableSummary"></span><span>DEMO DATA · LOCAL STORAGE</span></div>
           </section>
-          <p class="dashboard-disclaimer">This is a demonstration dashboard. Data is stored in this browser only and is not shared with a hospital system.</p>
+          <section class="extra-panel" id="panel-patients" hidden>
+            <div class="panel-heading"><div><span class="step-label">PATIENT DIRECTORY</span><h2>Patient records</h2><p>Search patient profiles and review their appointment history.</p></div></div>
+            <div class="filters"><div class="search-wrap"><span>⌕</span><input id="patientSearch" placeholder="Search name, phone or email..." aria-label="Search patient records"></div><button class="clear-filter" id="patientSearchClear">Clear search</button></div>
+            <div id="patientDirectory" class="patient-directory"></div>
+          </section>
+          <section class="extra-panel" id="panel-analytics" hidden>
+            <div class="panel-heading"><div><span class="step-label">OPERATIONAL INSIGHTS</span><h2>Data analysis</h2><p>Appointment volume, department mix and monthly activity.</p></div><button class="outline-btn" id="exportCsv">Export appointments CSV</button></div>
+            <div class="analytics-grid">
+              <article class="analytics-card"><h3>Monthly appointments</h3><p>Requests created per month</p><div id="monthlyChart" class="bar-chart"></div></article>
+              <article class="analytics-card"><h3>Department statistics</h3><p>Appointment requests by department</p><div id="departmentChart" class="bar-chart"></div></article>
+            </div>
+            <div class="analytics-note" id="analyticsSummary"></div>
+          </section>
+          <section class="extra-panel" id="panel-import" hidden>
+            <div class="panel-heading"><div><span class="step-label">DATA ONBOARDING</span><h2>Import historical records</h2><p>Bring existing patient and appointment rows into this demo.</p></div></div>
+            <div class="import-card"><div class="import-icon">⇧</div><h3>Upload a CSV or Excel workbook</h3><p>Accepted formats: .csv, .xlsx and .xls. The first row should contain column headings.</p>
+              <label class="file-drop" for="historyFile"><strong>Choose a file</strong><span id="selectedFile">No file selected</span><input id="historyFile" type="file" accept=".csv,.xlsx,.xls,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"></label>
+              <div class="import-actions"><button class="primary-btn" id="importHistory" type="button">Import records <span>→</span></button><button class="outline-btn" id="downloadTemplate" type="button">Download CSV template</button></div>
+              <p class="import-hint">Recognised headings include patient name/name, phone, email, department, date/appointment date, time, reason and status. Imported rows are added; existing records are not replaced.</p><div id="importFeedback" class="import-feedback" role="status"></div>
+            </div>
+          </section>
+          <section class="extra-panel" id="panel-walkthrough" hidden>
+            <div class="panel-heading"><div><span class="step-label">PRESENTATION MODE</span><h2>Hospital workflow walkthrough</h2><p>A guided patient-to-hospital demonstration and ready-to-record video narration.</p></div></div>
+            <div class="walkthrough-grid"><article class="walk-card"><b>01 · PATIENT</b><h3>Request an appointment</h3><p>Open Patient booking, enter a fictional patient profile, choose a department and submit a request. Point out the generated reference and Pending status.</p></article><article class="walk-card"><b>02 · STAFF</b><h3>Review and confirm</h3><p>Open Staff portal and sign in with the demo credentials. Search the patient, open View details and confirm the appointment. Show the status update.</p></article><article class="walk-card"><b>03 · RECORDS</b><h3>Show the patient profile</h3><p>Open Patient records, search the patient and explain that their profile groups contact details and appointment history.</p></article><article class="walk-card"><b>04 · MANAGEMENT</b><h3>Explore reports and import</h3><p>Show monthly and department charts, export a CSV, then demonstrate historical import using the supplied template.</p></article></div>
+            <div class="video-script"><div><span class="step-label">VIDEO SCRIPT · APPROX. 90 SECONDS</span><h3>Meridian Care hospital demonstration</h3></div><button class="outline-btn" id="copyVideoScript">Copy script</button>
+              <ol><li><b>Opening (0–10s):</b> “Welcome to Meridian Care, a hospital appointment and records workflow demonstration designed to connect the patient experience with day-to-day hospital operations.”</li><li><b>Patient booking (10–30s):</b> “A patient chooses a department, enters their contact details and preferred appointment time, and submits a request. A unique reference is generated, while the request remains pending until staff review it.”</li><li><b>Staff dashboard (30–50s):</b> “The care team signs in to a central dashboard, searches requests, opens patient details and updates each appointment as pending, confirmed, cancelled or completed.”</li><li><b>Patient records (50–65s):</b> “Patient records bring contact information and appointment history together, making it easier to find returning patients and understand their previous visits.”</li><li><b>Analytics and import (65–82s):</b> “The reporting view summarises monthly activity and department demand. Existing records can be imported from CSV or Excel to demonstrate historical data onboarding.”</li><li><b>Close (82–90s):</b> “This prototype illustrates the workflow. A live hospital deployment would connect to secure server-side services, verified staff access, messaging and protected clinical records.”</li></ol>
+            </div>
+          </section>
+          <p class="dashboard-disclaimer">Demonstration only: records are stored in this browser. Do not enter real patient information. Production use requires secure server-side storage, authentication, authorization, audit trails and privacy controls.</p> Data is stored in this browser only and is not shared with a hospital system.</p>
         </section>
       </div>
     </main>
@@ -187,6 +232,8 @@
   </div>
   <div class="modal-backdrop" id="detailModal" hidden><section class="detail-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><div><span class="step-label">APPOINTMENT DETAILS</span><h2 id="modalTitle">Request details</h2></div><button class="icon-btn" id="closeModal" aria-label="Close">×</button></div><div id="modalContent"></div><div class="modal-actions" id="modalActions"></div></section></div>
   <div class="toast" id="toast" role="status"></div>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="app.js"></script>
+  <script src="enhancements.js"></script>
 </body>
 </html>

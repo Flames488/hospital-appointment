@@ -1,49 +1,47 @@
-# Meridian Care — Hospital Appointment Booking Demo
+# Meridian Care Center — Hospital Demonstration
 
-A responsive, front-end demonstration of a fictional hospital appointment request and staff-management workflow.
+A responsive front-end prototype demonstrating a patient-to-hospital appointment workflow. It includes patient booking, staff appointment management, patient profiles and history, operational charts, historical CSV/Excel import, and a guided presentation script.
 
 ## Run locally
+1. Extract the ZIP.
+2. Open `index.html` in a modern browser, or serve the folder with VS Code Live Server / `python -m http.server 8000`.
+3. Choose **Staff portal** and use the demo credentials below.
 
-No build step, package installation, database server, or paid service is required.
-
-1. Extract the ZIP file.
-2. Open `index.html` in a modern browser.
-3. Select **Staff portal** to open the staff login.
-
-For the most reliable local testing, serve the folder with any static web server (for example, VS Code Live Server or `python -m http.server 8000`) and visit `http://localhost:8000`.
-
-## Demo staff credentials
-
+## Staff demo access
 - Username: `admin`
 - Password: `MeridianDemo24`
 
-## Included
+## Demonstration features
+- Patient appointment request form with validation and a unique reference.
+- Requests begin as **Pending**; staff can confirm, cancel, or mark confirmed appointments as completed.
+- Staff dashboard with search, status/date filters and appointment details.
+- Patient directory grouped by phone number (or name when phone is unavailable), with appointment history.
+- Analytics for monthly appointment-date volume and department statistics.
+- CSV export of stored appointment records.
+- CSV and Excel (`.xlsx` / `.xls`) import, with a downloadable CSV template. Excel parsing uses SheetJS from a CDN and therefore requires internet access; CSV import works without that library.
+- Patient-facing workflow explainer and staff walkthrough with a ready-to-record ~90-second video script and copy control.
+- Responsive desktop, tablet and mobile layouts.
 
-- Patient appointment request form with required-field, phone, email, and past-date validation.
-- Unique appointment reference generation and confirmation summary.
-- Staff login demonstration.
-- Dashboard totals for total, pending, confirmed, and cancelled appointments.
-- Appointment details modal and status actions: Pending → Confirmed / Cancelled; Confirmed → Completed / Cancelled.
-- Search by patient name or appointment reference.
-- Status and appointment-date filters.
-- Six fictional sample appointments across four fictional departments.
-- Responsive layouts for desktop, tablet, and mobile.
-- Developer WhatsApp contact in the footer.
+## Import format
+The first row must contain headings. Recognised aliases include:
+- Patient name: `name`, `patient name`, `full name`, `patient`
+- Phone: `phone`, `phone number`, `mobile`
+- Email: `email`, `email address`
+- Department: `department`, `service`, `specialty`
+- Appointment date: `date`, `appointment date`, `visit date`
+- Time: `time`, `appointment time`, `visit time`
+- Optional: `reason`, `notes`, `status`, `id`, `reference`
 
-## Data and security limitations
+Use ISO dates (`YYYY-MM-DD`) for the most reliable CSV imports. Imported records are added to the current browser dataset; matching appointment references are skipped.
 
-This is a **front-end demo**, not a production hospital system.
+## Important limitations — not production software
+This is a **browser-only demonstration**. Data is stored in `localStorage` on the current browser/device. It is not a shared hospital database and does not synchronize across staff devices. Demo credentials and the login gate are client-side and are not secure. There is no server-side validation, role-based access, audit trail, backup, encryption at rest, email/SMS notification, appointment-slot locking, or clinical record integration.
 
-- Appointment records are saved in the browser's `localStorage` on the device/browser where they were created.
-- Staff login is a demonstration-only client-side gate. Credentials are visible in `app.js` and are not secure authentication.
-- There is no shared database, server-side validation, access control, audit log, email/SMS notification, backup, or cross-device synchronization.
-- Clearing browser storage removes locally saved demo appointments.
-- Do not enter real patient information or use this demo for clinical operations.
-
-A production deployment must use a secure backend, server-side authentication and authorization, encrypted transport, validated persistence, audit logging, backups, and appropriate privacy/security controls.
+Do not enter real patient or clinical information. Before any real hospital deployment, replace the demo storage and login with a secure backend, authenticated and authorized staff accounts, encrypted transport and storage, audit logging, backup/recovery, privacy controls, consent workflows, and tested operational procedures. Have the deployment reviewed against applicable Nigerian data protection and health-sector requirements.
 
 ## Project files
-
-- `index.html` — page structure and interfaces
-- `styles.css` — visual design and responsive styling
-- `app.js` — demo data, validation, local persistence, login, filters, and appointment workflow
+- `index.html` — patient booking, staff portal and demo walkthrough
+- `styles.css` — responsive interface and extended workspace styles
+- `app.js` — original appointment workflow and demo authentication
+- `enhancements.js` — patient records, analytics, import/export and walkthrough interactions
+- `README.md` — setup, import and limitations
